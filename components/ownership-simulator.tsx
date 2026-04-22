@@ -188,7 +188,7 @@ export default function OwnershipSimulator() {
                 </div>
 
                 {/* Profit Input */}
-                <div>
+                {/* <div>
                   <label className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-2 block">
                     Annual Platform Profit ($)
                   </label>
@@ -198,7 +198,7 @@ export default function OwnershipSimulator() {
                     value={profit}
                     onChange={(e) => setProfit(parseFloat(e.target.value) || 0)}
                   />
-                </div>
+                </div> */}
               </div>
 
               {/* Right — Results */}
