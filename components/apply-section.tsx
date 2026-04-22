@@ -1,97 +1,111 @@
 "use client";
 
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-interface FormData {
-  name: string;
-  email: string;
-  linkedin: string;
-  why: string;
-  value: string;
-}
+const partnerSchema = z.object({
+  fullName: z.string().trim().min(1, "Full name is required"),
+  email: z.string().trim().min(1, "Email is required").email("Enter a valid email"),
+  portfolio: z.string().trim().min(1, "LinkedIn / Portfolio is required"),
+  whyJoin: z
+    .string()
+    .trim()
+    .min(30, "Please write at least 30 characters"),
+  valueBring: z
+    .string()
+    .trim()
+    .min(30, "Please write at least 30 characters"),
+});
 
-interface Errors {
-  name?: string;
-  email?: string;
-  linkedin?: string;
-  why?: string;
-  value?: string;
-}
+type PartnerFormValues = z.infer<typeof partnerSchema>;
 
 export default function ApplyPartner() {
-  const [form, setForm] = useState<FormData>({
-    name: "",
-    email: "",
-    linkedin: "",
-    why: "",
-    value: "",
-  });
-  const [errors, setErrors] = useState<Errors>({});
   const [submitted, setSubmitted] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [serverError, setServerError] = useState("");
 
-  const validate = (): Errors => {
-    const e: Errors = {};
-    if (!form.name.trim()) e.name = "Full name is required.";
-    if (!form.email.trim()) e.email = "Email is required.";
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email))
-      e.email = "Enter a valid email.";
-    if (!form.linkedin.trim()) e.linkedin = "LinkedIn / Portfolio is required.";
-    if (!form.why.trim()) e.why = "Please tell us why you want to join.";
-    else if (form.why.trim().length < 30)
-      e.why = "Please write at least 30 characters.";
-    if (!form.value.trim()) e.value = "Please describe the value you'd bring.";
-    else if (form.value.trim().length < 30)
-      e.value = "Please write at least 30 characters.";
-    return e;
-  };
+  const {
+    register,
+    handleSubmit,
+    reset,
+    watch,
+    formState: { errors, isSubmitting },
+  } = useForm<PartnerFormValues>({
+    resolver: zodResolver(partnerSchema),
+    defaultValues: {
+      fullName: "",
+      email: "",
+      portfolio: "",
+      whyJoin: "",
+      valueBring: "",
+    },
+  });
 
-  const handleSubmit = () => {
-    const e = validate();
-    setErrors(e);
-    if (Object.keys(e).length > 0) return;
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
+  const firstName = watch("fullName")?.split(" ")[0] || "";
+
+  const onSubmit = async (data: PartnerFormValues) => {
+    setServerError("");
+
+    try {
+      const res = await fetch("/api/partner", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await res.json();
+
+      if (!res.ok) {
+        setServerError(result.message || "Failed to submit application");
+        return;
+      }
+
       setSubmitted(true);
-    }, 1400);
+      reset();
+    } catch (error) {
+      setServerError("Something went wrong. Please try again.");
+    }
   };
 
   const Field = ({
-    id,
     placeholder,
-    value,
     error,
-    onChange,
     multiline = false,
+    registration,
+    type = "text",
   }: {
-    id: keyof FormData;
     placeholder: string;
-    value: string;
     error?: string;
-    onChange: (v: string) => void;
     multiline?: boolean;
+    registration: any;
+    type?: string;
   }) => {
     const base = `w-full bg-[#221b35] border rounded-xl px-4 py-3 text-sm text-white placeholder-white/50
-       outline-none transition-colors duration-200 resize-none
-       ${error ? "border-red-500/60 focus:border-red-400" : "border-white/15 focus:border-violet-500 hover:border-white/30"}`;
+      outline-none transition-colors duration-200 resize-none
+      ${
+        error
+          ? "border-red-500/60 focus:border-red-400"
+          : "border-white/15 focus:border-violet-500 hover:border-white/30"
+      }`;
+
     return (
       <div>
         {multiline ? (
           <textarea
             rows={4}
             placeholder={placeholder}
-            value={value}
-            onChange={(e) => onChange(e.target.value)}
             className={base}
+            {...registration}
           />
         ) : (
           <input
-            type="text"
+            type={type}
             placeholder={placeholder}
-            value={value}
-            onChange={(e) => onChange(e.target.value)}
             className={base}
+            {...registration}
           />
         )}
         {error && <p className="text-red-400 text-xs mt-1 ml-1">{error}</p>}
@@ -102,8 +116,6 @@ export default function ApplyPartner() {
   return (
     <>
       <style>{`
-       
-
         .ap-bg {
           background: radial-gradient(ellipse at 20% 50%, #1e1030 0%, #0f0b1a 50%, #0d1520 100%);
         }
@@ -131,10 +143,12 @@ export default function ApplyPartner() {
         .spin { animation: spin 0.8s linear infinite; }
       `}</style>
 
-      <section className="ap w-full ap-bg py-24 px-6 min-h-screen flex items-center" id="apply">
+      <section
+        className="ap w-full ap-bg py-24 px-6 min-h-screen flex items-center"
+        id="apply"
+      >
         <div className="max-w-7xl mx-auto w-full">
           {submitted ? (
-            /* ── Success State ── */
             <div className="fade-up text-center py-16">
               <div className="w-16 h-16 rounded-full bg-violet-600/20 border border-violet-500/40 flex items-center justify-center mx-auto mb-6">
                 <svg
@@ -151,27 +165,24 @@ export default function ApplyPartner() {
                   />
                 </svg>
               </div>
-              <h3 className="ap-title text-3xl font-extrabold text-white mb-3">
+
+              <h3 className="text-3xl font-extrabold text-white mb-3">
                 Application Received!
               </h3>
+
               <p className="text-white/50 text-sm max-w-sm mx-auto mb-8">
                 Thanks{" "}
                 <span className="text-violet-400 font-semibold">
-                  {form.name.split(" ")[0]}
+                  {firstName}
                 </span>
-                ! We've received your application and will get back to you
+                ! We&apos;ve received your application and will get back to you
                 within 5–7 business days.
               </p>
+
               <button
                 onClick={() => {
                   setSubmitted(false);
-                  setForm({
-                    name: "",
-                    email: "",
-                    linkedin: "",
-                    why: "",
-                    value: "",
-                  });
+                  reset();
                 }}
                 className="text-xs text-white/30 hover:text-white/60 transition-colors underline underline-offset-4"
               >
@@ -179,84 +190,67 @@ export default function ApplyPartner() {
               </button>
             </div>
           ) : (
-            /* ── Form ── */
             <>
-              {/* Header */}
               <div className="mb-10">
                 <span className="text-xs font-semibold tracking-widest text-violet-400 uppercase">
                   Partnership
                 </span>
-                <h2 className="ap-title text-4xl md:text-5xl font-extrabold text-white mt-3 mb-3">
+
+                <h2 className="text-4xl md:text-5xl font-extrabold text-white mt-3 mb-3">
                   Apply to Become a Partner
                 </h2>
+
                 <p className="text-white/40 text-sm">
                   Join as an owner-operator and help build the next generation
                   of deep-tech companies.
                 </p>
               </div>
 
-              {/* Fields */}
-              <div className="flex flex-col gap-4">
+              <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
                 <Field
-                  id="name"
                   placeholder="Full Name"
-                  value={form.name}
-                  error={errors.name}
-                  onChange={(v) => {
-                    setForm({ ...form, name: v });
-                    setErrors({ ...errors, name: undefined });
-                  }}
-                />
-                <Field
-                  id="email"
-                  placeholder="Email"
-                  value={form.email}
-                  error={errors.email}
-                  onChange={(v) => {
-                    setForm({ ...form, email: v });
-                    setErrors({ ...errors, email: undefined });
-                  }}
-                />
-                <Field
-                  id="linkedin"
-                  placeholder="LinkedIn / Portfolio"
-                  value={form.linkedin}
-                  error={errors.linkedin}
-                  onChange={(v) => {
-                    setForm({ ...form, linkedin: v });
-                    setErrors({ ...errors, linkedin: undefined });
-                  }}
-                />
-                <Field
-                  id="why"
-                  placeholder="Why do you want to join AgriBioventures?"
-                  value={form.why}
-                  error={errors.why}
-                  multiline
-                  onChange={(v) => {
-                    setForm({ ...form, why: v });
-                    setErrors({ ...errors, why: undefined });
-                  }}
-                />
-                <Field
-                  id="value"
-                  placeholder="What value would you bring as a partner?"
-                  value={form.value}
-                  error={errors.value}
-                  multiline
-                  onChange={(v) => {
-                    setForm({ ...form, value: v });
-                    setErrors({ ...errors, value: undefined });
-                  }}
+                  error={errors.fullName?.message}
+                  registration={register("fullName")}
                 />
 
+                <Field
+                  type="email"
+                  placeholder="Email"
+                  error={errors.email?.message}
+                  registration={register("email")}
+                />
+
+                <Field
+                  placeholder="LinkedIn / Portfolio"
+                  error={errors.portfolio?.message}
+                  registration={register("portfolio")}
+                />
+
+                <Field
+                  placeholder="Why do you want to join AgriBioVentures?"
+                  error={errors.whyJoin?.message}
+                  multiline
+                  registration={register("whyJoin")}
+                />
+
+                <Field
+                  placeholder="What value would you bring as a partner?"
+                  error={errors.valueBring?.message}
+                  multiline
+                  registration={register("valueBring")}
+                />
+
+                {serverError && (
+                  <p className="text-red-400 text-sm">{serverError}</p>
+                )}
+
                 <button
-                  onClick={handleSubmit}
-                  disabled={loading}
+                  type="submit"
+                  disabled={isSubmitting}
                   className="mt-2 flex items-center justify-center gap-2 px-8 py-3 rounded-xl bg-violet-600 hover:bg-violet-500
                     text-white text-sm font-semibold w-fit transition-all duration-200 disabled:opacity-70"
                 >
-                  {loading ? (
+                  {isSubmitting ? (
                     <>
                       <svg
                         className="spin w-4 h-4"
@@ -281,11 +275,12 @@ export default function ApplyPartner() {
                 <div>
                   <p className="text-white text-xl mt-20">
                     This is a long-term effort to build meaningful companies in
-                    sectors that matter. <br />If you are interested in building — not
-                    just participating — we should talk.
+                    sectors that matter. <br />
+                    If you are interested in building — not just participating —
+                    we should talk.
                   </p>
                 </div>
-              </div>
+              </form>
             </>
           )}
         </div>

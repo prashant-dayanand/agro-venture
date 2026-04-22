@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AgriBioventures</title>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        margin: 0;
+        font-family: "Inter", sans-serif;
+        background: #0b0b0b;
+        color: #fff;
+      }
+      section {
+        max-width: 1000px;
+        margin: auto;
+        padding: 80px 20px;
+      }
+      h1 {
+        font-size: 56px;
+      }
+      h2 {
+        font-size: 36px;
+        margin-bottom: 10px;
+      }
+      h3 {
+        font-size: 22px;
+        color: #ccc;
+        margin-bottom: 20px;
+      }
+      p {
+        color: #aaa;
+      }
+
+      .hero {
+        text-align: center;
+        padding-top: 120px;
+      }
+
+      .gradient {
+        background: linear-gradient(90deg, #00ffd0, #7a5cff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .card {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(20px);
+        border-radius: 20px;
+        padding: 30px;
+        margin-top: 40px;
+      }
+
+      input,
+      select,
+      textarea {
+        width: 100%;
+        padding: 12px;
+        margin: 10px 0;
+        border-radius: 10px;
+        border: none;
+        background: #111;
+        color: #fff;
+      }
+
+      button {
+        padding: 14px 24px;
+        border: none;
+        border-radius: 12px;
+        background: linear-gradient(90deg, #00ffd0, #7a5cff);
+        color: #000;
+        font-weight: 600;
+        cursor: pointer;
+      }
+
+      .slider-label {
+        display: flex;
+        justify-content: space-between;
+        font-size: 14px;
+        color: #aaa;
+      }
+
+      .result {
+        margin-top: 20px;
+        font-size: 22px;
+      }
+      .big {
+        font-size: 32px;
+        font-weight: 600;
+      }
+
+      .timeline {
+        border-left: 2px solid #333;
+        padding-left: 20px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <section class="hero">
+      <h1>
+        Build Unicorns.<br />
+        Own the Platform.<br />
+        <span class="gradient">Shape a $1T Future.</span>
+      </h1>
+
+      <p>
+        Next-generation venture platform for agritech, biotech & life sciences.
+      </p>
+      <p style="font-size: 14px">⚠️ Long-term ambition. Not a guarantee.</p>
+    </section>
+
+    <section>
+      <h2>💎 See What Your Ownership Could Become</h2>
+      <h3>
+        Even small equity stakes can become meaningful at scale. Explore your
+        potential outcomes.
+      </h3>
+
+      <div class="card">
+        <h3>Partner Outcome Simulator</h3>
+
+        <label>Role</label>
+        <select id="role" onchange="setEquityRange()">
+          <option value="founder">Founding Partner</option>
+          <option value="core">Core Operator</option>
+          <option value="ecosystem">Ecosystem</option>
+          <option value="general">General</option>
+        </select>
+
+        <div class="slider-label">
+          <span>Equity %</span><span id="eqVal">0.5%</span>
+        </div>
+        <input
+          type="range"
+          id="equity"
+          min="0.01"
+          max="3"
+          step="0.01"
+          value="0.5"
+          oninput="update()"
+        />
+
+        <div class="slider-label">
+          <span>Platform Valuation</span><span id="valVal">$1T</span>
+        </div>
+        <input
+          type="range"
+          id="valuation"
+          min="1e8"
+          max="1e12"
+          step="1e8"
+          value="1e12"
+          oninput="update()"
+        />
+
+        <div class="slider-label">
+          <span>Timeline (Year)</span><span id="yearVal">2033</span>
+        </div>
+        <input
+          type="range"
+          id="year"
+          min="2026"
+          max="2035"
+          value="2033"
+          oninput="update()"
+        />
+
+        <label>Annual Platform Profit ($)</label>
+        <input type="number" id="profit" value="50000000" oninput="update()" />
+
+        <div class="result">
+          <div class="big" id="equityResult">$0</div>
+          <div>Estimated Equity Value</div>
+
+          <br />
+
+          <div class="big" id="revResult">$0</div>
+          <div>Estimated Annual Revenue Share</div>
+        </div>
+      </div>
+
+      <p style="font-size: 14px; margin-top: 10px">
+        These projections are illustrative, not guarantees. Outcomes depend on
+        execution, ownership, and platform success.
+      </p>
+    </section>
+
+    <section>
+      <h2>📈 A Realistic Path to IPO</h2>
+      <h3>Built step-by-step from 2026 to long-term public market readiness</h3>
+
+      <div class="timeline">
+        <p><b>2026–27:</b> Launch platform & first startups</p>
+        <p><b>2028–29:</b> Breakout companies emerge</p>
+        <p><b>2030–32:</b> Scale portfolio & generate exits</p>
+        <p><b>2033+:</b> IPO-ready global platform</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>💎 What This Could Mean for You</h2>
+      <h3>Illustrative outcomes if the platform reaches large-scale success</h3>
+
+      <p>
+        0.01% → $100M<br />
+        0.05% → $500M<br />
+        0.1% → $1B
+      </p>
+
+      <p style="font-size: 14px">Illustrative only. Not guaranteed.</p>
+    </section>
+
+    <section>
+      <h2>📝 Apply to Become a Partner</h2>
+      <h3>
+        Join as an owner-operator and help build the next generation of
+        deep-tech companies
+      </h3>
+
+      <input placeholder="Full Name" />
+      <input placeholder="Email" />
+      <input placeholder="LinkedIn / Portfolio" />
+
+      <textarea
+        placeholder="Why do you want to join AgriBioventures?"
+      ></textarea>
+      <textarea
+        placeholder="What value would you bring as a partner?"
+      ></textarea>
+
+      <button>Apply Now</button>
+    </section>
+
+    <section>
+      <h2>🔗 Final Note</h2>
+      <p>
+        This is not a traditional job.<br />
+        It’s an opportunity to build, own, and participate in long-term value
+        creation.<br /><br />
+        If that excites you — apply.
+      </p>
+    </section>
+
+    <script>
+      function setEquityRange() {
+        let role = document.getElementById("role").value;
+        let eq = document.getElementById("equity");
+
+        if (role === "founder") {
+          eq.min = 1;
+          eq.max = 3;
+          eq.value = 1.5;
+        } else if (role === "core") {
+          eq.min = 0.2;
+          eq.max = 0.8;
+          eq.value = 0.4;
+        } else if (role === "ecosystem") {
+          eq.min = 0.1;
+          eq.max = 0.4;
+          eq.value = 0.2;
+        } else {
+          eq.min = 0.05;
+          eq.max = 0.15;
+          eq.value = 0.08;
+        }
+
+        update();
+      }
+
+      function update() {
+        let eq = parseFloat(document.getElementById("equity").value);
+        let val = parseFloat(document.getElementById("valuation").value);
+        let yr = parseInt(document.getElementById("year").value);
+        let profit = parseFloat(document.getElementById("profit").value);
+
+        let growth = (yr - 2026) / 7;
+        if (growth < 0) growth = 0;
+        if (growth > 1) growth = 1;
+
+        let adjVal = val * growth;
+        let equityVal = (eq / 100) * adjVal;
+        let rev = (eq / 100) * 0.2 * profit * growth;
+
+        document.getElementById("eqVal").innerText = eq + "%";
+        document.getElementById("valVal").innerText = "$" + val / 1e9 + "B";
+        document.getElementById("yearVal").innerText = yr;
+
+        document.getElementById("equityResult").innerText =
+          "$" + Math.round(equityVal).toLocaleString();
+        document.getElementById("revResult").innerText =
+          "$" + Math.round(rev).toLocaleString();
+      }
+      update();
+    </script>
+  </body>
+</html>

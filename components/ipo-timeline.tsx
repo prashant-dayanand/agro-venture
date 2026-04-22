@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
 const steps = [
@@ -27,7 +28,9 @@ const steps = [
 ];
 
 export default function IPOTimeline() {
-  const [visible, setVisible] = useState<boolean[]>(new Array(steps.length).fill(false));
+  const [visible, setVisible] = useState<boolean[]>(
+    new Array(steps.length).fill(false),
+  );
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
@@ -45,19 +48,19 @@ export default function IPOTimeline() {
             obs.disconnect();
           }
         },
-        { threshold: 0.3 }
+        { threshold: 0.3 },
       );
+
       if (itemRefs.current[i]) obs.observe(itemRefs.current[i]!);
       return obs;
     });
+
     return () => observers.forEach((o) => o.disconnect());
   }, []);
 
   return (
     <>
       <style>{`
-      
-
         .step-item {
           opacity: 0;
           transform: translateX(-16px);
@@ -69,58 +72,80 @@ export default function IPOTimeline() {
         }
       `}</style>
 
-      <section className="ipo bg-white w-full py-24 px-6">
+      <section className="ipo bg-white w-full py-20 md:py-24 px-4 sm:px-6">
         <div className="max-w-7xl mx-auto">
-
           {/* Header */}
-          <div className="mb-14">
+          <div className="mb-12 md:mb-14">
             <span className="text-xs font-semibold tracking-widest text-violet-600 uppercase">
               Roadmap
             </span>
-            <h2 className="ipo-title text-4xl md:text-5xl font-extrabold text-gray-900 mt-3 mb-3">
+            <h2 className="ipo-title text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 mt-3 mb-3">
               A Realistic Path to IPO
             </h2>
-            <p className="text-gray-500 text-sm">
+            <p className="text-gray-500 text-sm sm:text-base max-w-2xl">
               Built step-by-step from 2026 to long-term public market readiness.
             </p>
           </div>
 
-          {/* Timeline */}
-          <div className="relative flex flex-col gap-0">
-            {/* Vertical line */}
-            <div className="absolute left-[7px] top-2 bottom-2 w-px bg-gray-200" />
+          {/* Responsive Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
+            {/* Timeline */}
+            <div className="relative flex flex-col">
+              <div className="absolute left-[7px] top-2 bottom-2 w-px bg-gray-200" />
 
-            {steps.map((s, i) => (
-              <div
-                key={s.period}
-                ref={(el) => { itemRefs.current[i] = el; }}
-                className={`step-item relative flex gap-6 pb-10 last:pb-0 ${visible[i] ? "show" : ""}`}
-              >
-                {/* Dot */}
-                <div className="relative z-10 mt-1 flex-shrink-0">
-                  <div
-                    className={`w-[15px] h-[15px] rounded-full border-2 transition-all duration-500
-                      ${visible[i]
-                        ? s.accent
-                          ? "bg-violet-500 border-violet-400 shadow-[0_0_10px_2px_rgba(139,92,246,0.3)]"
-                          : "bg-violet-600 border-violet-500"
-                        : "bg-white border-gray-300"
-                      }`}
-                  />
-                </div>
+              {steps.map((s, i) => (
+                <div
+                  key={s.period}
+                  ref={(el) => {
+                    itemRefs.current[i] = el;
+                  }}
+                  className={`step-item relative flex gap-4 sm:gap-6 pb-8 sm:pb-10 last:pb-0 ${
+                    visible[i] ? "show" : ""
+                  }`}
+                >
+                  {/* Dot */}
+                  <div className="relative z-10 mt-1 flex-shrink-0">
+                    <div
+                      className={`w-[15px] h-[15px] rounded-full border-2 transition-all duration-500
+                        ${
+                          visible[i]
+                            ? s.accent
+                              ? "bg-violet-500 border-violet-400 shadow-[0_0_10px_2px_rgba(139,92,246,0.3)]"
+                              : "bg-violet-600 border-violet-500"
+                            : "bg-white border-gray-300"
+                        }`}
+                    />
+                  </div>
 
-                {/* Content */}
-                <div className="pt-0">
-                  <span className="ipo-title text-violet-600 text-sm font-bold block mb-1">
-                    {s.period}
-                  </span>
-                  <p className="text-gray-900 font-semibold text-base mb-1">{s.title}</p>
-                  <p className="text-gray-500 text-sm leading-relaxed max-w-lg">{s.desc}</p>
+                  {/* Content */}
+                  <div>
+                    <span className="ipo-title text-violet-600 text-sm font-bold block mb-1">
+                      {s.period}
+                    </span>
+                    <p className="text-gray-900 font-semibold text-base sm:text-lg mb-1">
+                      {s.title}
+                    </p>
+                    <p className="text-gray-500 text-sm sm:text-base leading-relaxed max-w-lg">
+                      {s.desc}
+                    </p>
+                  </div>
                 </div>
+              ))}
+            </div>
+
+            {/* Image */}
+            <div className="w-full flex justify-center lg:justify-end">
+              <div className="relative w-full max-w-[500px] sm:max-w-[380px] md:max-w-[560px] lg:max-w-[620px] aspect-[4/3]">
+                <Image
+                  src="/apply.png"
+                  alt="IPO roadmap"
+                  fill
+                  className="object-contain"
+                  priority
+                />
               </div>
-            ))}
+            </div>
           </div>
-
         </div>
       </section>
     </>

@@ -199,7 +199,7 @@ function Navbar() {
       {/* Mobile menu */}
       {menuOpen && (
         <div className="md:hidden bg-[#0d1b3e]/95 backdrop-blur-md border-t border-white/10 px-6 py-4 flex flex-col gap-4">
-          {links.map((l) => (
+          {/* {links.map((l) => (
             <a
               key={l}
               href="#"
@@ -207,7 +207,7 @@ function Navbar() {
             >
               {l}
             </a>
-          ))}
+          ))} */}
           <a
             href="#"
             className="mt-2 inline-flex items-center gap-2 px-5 py-2 rounded-full border border-[#7aef6a]/50 text-[#7aef6a] text-sm font-medium w-fit hover:bg-[#7aef6a]/10 transition-all"
