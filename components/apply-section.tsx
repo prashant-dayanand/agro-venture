@@ -4,19 +4,18 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Image from "next/image";
 
 const partnerSchema = z.object({
   fullName: z.string().trim().min(1, "Full name is required"),
-  email: z.string().trim().min(1, "Email is required").email("Enter a valid email"),
+  email: z
+    .string()
+    .trim()
+    .min(1, "Email is required")
+    .email("Enter a valid email"),
   portfolio: z.string().trim().min(1, "LinkedIn / Portfolio is required"),
-  whyJoin: z
-    .string()
-    .trim()
-    .min(30, "Please write at least 30 characters"),
-  valueBring: z
-    .string()
-    .trim()
-    .min(30, "Please write at least 30 characters"),
+  whyJoin: z.string().trim().min(30, "Please write at least 30 characters"),
+  valueBring: z.string().trim().min(30, "Please write at least 30 characters"),
 });
 
 type PartnerFormValues = z.infer<typeof partnerSchema>;
@@ -206,7 +205,10 @@ export default function ApplyPartner() {
                 </p>
               </div>
 
-              <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+              <form
+                onSubmit={handleSubmit(onSubmit)}
+                className="flex flex-col gap-4"
+              >
                 <Field
                   placeholder="Full Name"
                   error={errors.fullName?.message}
@@ -272,7 +274,8 @@ export default function ApplyPartner() {
                   )}
                 </button>
 
-                <div>
+                <div className="flex items-start gap-10">
+                 
                   <p className="text-white text-xl mt-20">
                     This is a long-term effort to build meaningful companies in
                     sectors that matter. <br />

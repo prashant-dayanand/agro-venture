@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
@@ -12,7 +14,7 @@ interface Particle {
 }
 
 // ─── Animated Canvas Background ──────────────────────────────────────────────
-function ConstellationCanvas() {
+export function ConstellationCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -52,7 +54,7 @@ function ConstellationCanvas() {
         0,
         canvas.height * 0.5,
         canvas.width,
-        canvas.height
+        canvas.height,
       );
       bg.addColorStop(0, "#0d1b3e");
       bg.addColorStop(0.5, "#0e2545");
@@ -114,7 +116,7 @@ function ConstellationCanvas() {
 }
 
 // ─── Navbar ───────────────────────────────────────────────────────────────────
-function Navbar() {
+export function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -124,55 +126,48 @@ function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const links = ["About", "Portfolio", "Team", "Research", "Contact"];
-
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "bg-[#0d1b3e]/90 backdrop-blur-md shadow-lg"
+          ? "bg-[#0d1b3e]/70 backdrop-blur-md shadow-lg"
           : "bg-transparent"
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 md:px-10 flex items-center justify-between h-16 md:h-20">
         {/* Logo */}
-        <a href="#" className="flex items-center gap-2 group">
-         
+        <div className="flex items-center gap-5">
           <span className="text-white font-semibold tracking-wide text-lg">
             AgriBioVentures
           </span>
-        </a>
+        </div>
 
         {/* Desktop links */}
-        {/* <ul className="hidden md:flex items-center gap-8">
-          {links.map((l) => (
-            <li key={l}>
-              <a
-                href="#"
-                className="text-sm text-blue-100/70 hover:text-[#7aef6a] transition-colors duration-200 tracking-wide"
-              >
-                {l}
-              </a>
-            </li>
-          ))}
-        </ul> */}
-
-        {/* CTA */}
-        <a
-          href="#apply"
-          className="hidden md:inline-flex items-center gap-2 px-5 py-2 rounded-full border border-[#7aef6a]/50 text-[#7aef6a] text-sm font-medium hover:bg-[#7aef6a]/10 transition-all duration-200"
-        >
-          Get In Touch
-          <svg
-            viewBox="0 0 16 16"
-            className="w-4 h-4"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
+        <div className="flex gap-5">
+          <Link
+            href="/about-us"
+            className="hidden md:inline-flex items-center bg-white gap-2 px-5 py-2 rounded-full border border-white/50 text-black text-sm font-medium hover:bg-[#7aef6a]/10 transition-all duration-200"
           >
-            <path d="M3 8h10M9 4l4 4-4 4" />
-          </svg>
-        </a>
+            About Us
+          </Link>
+
+          {/* CTA */}
+          <a
+            href="#apply"
+            className="hidden md:inline-flex items-center gap-2 px-5 py-2 rounded-full border border-[#7aef6a]/50 text-[#7aef6a] text-sm font-medium hover:bg-[#7aef6a]/10 transition-all duration-200"
+          >
+            Get In Touch
+            <svg
+              viewBox="0 0 16 16"
+              className="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <path d="M3 8h10M9 4l4 4-4 4" />
+            </svg>
+          </a>
+        </div>
 
         {/* Hamburger */}
         <button
@@ -225,7 +220,6 @@ export default function HeroSection() {
   return (
     <>
       {/* Google Font */}
-     
 
       <Navbar />
 
@@ -235,13 +229,15 @@ export default function HeroSection() {
         <ConstellationCanvas />
 
         {/* Dark top overlay so top half looks almost black like screenshot */}
-        <div
-          className="absolute inset-0 pointer-events-none"
-         
-        />
+        <div className="absolute inset-0 pointer-events-none" />
 
         {/* Content */}
-        <div className="relative z-10 text-center px-6 max-w-4xl mx-auto pt-20">
+        <div className="relative z-10 text-center px-6 max-w-4xl mx-auto pt-20 flex flex-col items-center">
+          <img
+            src="/logo.png"
+            alt="IPO roadmap"
+            className="object-contain w-32"
+          />
           <h1 className="hero-title text-white text-4xl md:text-6xl mb-6 fade-in-u font-bold">
             Building Enduring Science&#8209;Driven Companies At Global Scale
           </h1>
