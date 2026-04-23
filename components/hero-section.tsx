@@ -134,7 +134,7 @@ export function Navbar() {
           : "bg-transparent"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-6 md:px-10 flex items-center justify-between h-16 md:h-20">
+      <div className="max-w-7xl mx-auto flex items-center justify-between h-16 md:h-20">
         {/* Logo */}
         <div className="flex items-center gap-5">
         <Link href="/">
@@ -153,8 +153,8 @@ export function Navbar() {
           </Link>
 
           {/* CTA */}
-          <a
-            href="#apply"
+          <Link
+            href="/apply"
             className="hidden md:inline-flex items-center gap-2 px-5 py-2 rounded-full border border-[#7aef6a]/50 text-[#7aef6a] text-sm font-medium hover:bg-[#7aef6a]/10 transition-all duration-200"
           >
             Get In Touch
@@ -167,7 +167,7 @@ export function Navbar() {
             >
               <path d="M3 8h10M9 4l4 4-4 4" />
             </svg>
-          </a>
+          </Link>
         </div>
 
         {/* Hamburger */}
@@ -204,12 +204,20 @@ export function Navbar() {
               {l}
             </a>
           ))} */}
-          <a
-            href="#"
+         <div className="flex items-center gap-5">
+            <Link
+            href="/apply"
+            className="mt-2 inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white text-sm font-medium w-fit hover:bg-gray-200 transition-all"
+          >
+            About Us
+          </Link>
+          <Link
+            href="/apply"
             className="mt-2 inline-flex items-center gap-2 px-5 py-2 rounded-full border border-[#7aef6a]/50 text-[#7aef6a] text-sm font-medium w-fit hover:bg-[#7aef6a]/10 transition-all"
           >
             Get In Touch
-          </a>
+          </Link>
+         </div>
         </div>
       )}
     </nav>
