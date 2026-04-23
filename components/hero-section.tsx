@@ -206,7 +206,7 @@ export function Navbar() {
           ))} */}
          <div className="flex items-center gap-5">
             <Link
-            href="/apply"
+            href="/about-us"
             className="mt-2 inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white text-sm font-medium w-fit hover:bg-gray-200 transition-all"
           >
             About Us
