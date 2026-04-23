@@ -75,9 +75,7 @@ export default function ProcessSection() {
         <div className="relative mx-auto max-w-7xl">
           {/* Header */}
           <div className="text-center mb-16">
-            <span className="inline-block text-xs font-semibold tracking-widest text-violet-600 uppercase mb-3">
-              Our Process
-            </span>
+           
             <h2 className="process-title text-4xl md:text-5xl font-extrabold text-black leading-tight">
               How We Work
             </h2>

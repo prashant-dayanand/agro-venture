@@ -191,9 +191,7 @@ export default function ApplyPartner() {
           ) : (
             <>
               <div className="mb-10">
-                <span className="text-xs font-semibold tracking-widest text-violet-400 uppercase">
-                  Partnership
-                </span>
+                
 
                 <h2 className="text-4xl md:text-5xl font-extrabold text-white mt-3 mb-3">
                   Apply to Become a Partner

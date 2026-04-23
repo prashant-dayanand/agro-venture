@@ -52,9 +52,7 @@ export default function PartnerEconomics() {
         <div className="max-w-7xl mx-auto">
           {/* Header */}
           <div className="mb-16 max-w-xl">
-            <span className="text-xs font-semibold tracking-widest text-violet-600 uppercase">
-              Economics
-            </span>
+           
             <h2 className="pe-title text-4xl md:text-5xl font-extrabold text-gray-900 mt-3 mb-4">
               Partner Economics
             </h2>

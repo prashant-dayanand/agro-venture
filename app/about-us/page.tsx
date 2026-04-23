@@ -158,25 +158,26 @@ export default function AboutPage() {
       `}</style>
       <Navbar />
       <main className="about bg-white">
+        <div className="h-20 bg-gray-700">
+
+        </div>
         {/* ── Hero ── */}
-        <section className="bg-black py-28 px-6 text-center">
+        <section className="bg-white py-40 px-6 text-center">
           <div className="max-w-3xl mx-auto">
-            <h1 className="about-title text-3xl md:text-6xl font-extrabold text-white mt-4 mb-6 leading-tight">
-              AgriBioventures
-            </h1>
+           
 
             {/* Pulse orb */}
-            <div className="w-24 h-24 rounded-full bg-gradient-to-br from-emerald-400 to-emerald-700 flex items-center justify-center mx-auto mb-8 pulse-green">
+            <div className="w-32 h-32 rounded-full bg-gradient-to-br from-emerald-400 to-emerald-700 flex items-center justify-center mx-auto mb-8 pulse-green">
               <span className="text-white text-xs font-semibold tracking-wider">
                 AI Core
               </span>
             </div>
 
-            <p className="text-gray-300 text-lg leading-relaxed mb-4">
+            <p className="text-gray-800 text-xl font-semibold mb-4">
               A venture platform built to systematically create and scale
               companies across agriculture, biology, and human health.
             </p>
-            <p className="text-green-500 text-lg leading-relaxed">
+            <p className="text-green-600 text-xl leading-relaxed">
               Instead of relying on fragmented processes, AgriBioventures
               integrates intelligence, execution, and capital into a unified
               system designed to improve the probability of building durable,
@@ -195,9 +196,7 @@ export default function AboutPage() {
         >
           <div className="max-w-5xl mx-auto">
             <div className="text-center mb-14">
-              <span className="text-xs font-semibold tracking-widest text-violet-600 uppercase">
-                Platform
-              </span>
+             
               <h2 className="about-title text-4xl md:text-5xl font-extrabold text-gray-900 mt-3 mb-4">
                 About the Platform
               </h2>
@@ -236,9 +235,7 @@ export default function AboutPage() {
         <section className="bg-white py-24 px-6">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-14">
-              <span className="text-xs font-semibold tracking-widest text-violet-600 uppercase">
-                Process
-              </span>
+           
               <h2 className="about-title text-4xl md:text-5xl font-extrabold text-gray-900 mt-3 mb-4">
                 How the System Works
               </h2>
@@ -293,9 +290,7 @@ export default function AboutPage() {
         >
           <div className="max-w-5xl mx-auto">
             <div className="text-center mb-14">
-              <span className="text-xs font-semibold tracking-widest text-violet-600 uppercase">
-                Thesis
-              </span>
+             
               <h2 className="about-title text-4xl md:text-5xl font-extrabold text-gray-900 mt-3 mb-4">
                 Investment Thesis
               </h2>
@@ -329,9 +324,7 @@ export default function AboutPage() {
         <section className="bg-white py-24 px-6">
           <div className="max-w-5xl mx-auto">
             <div className="text-center mb-14">
-              <span className="text-xs font-semibold tracking-widest text-violet-600 uppercase">
-                Investors
-              </span>
+             
               <h2 className="about-title text-4xl md:text-5xl font-extrabold text-gray-900 mt-3 mb-4">
                 For Investors
               </h2>

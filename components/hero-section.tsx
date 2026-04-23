@@ -137,9 +137,10 @@ export function Navbar() {
       <div className="max-w-7xl mx-auto px-6 md:px-10 flex items-center justify-between h-16 md:h-20">
         {/* Logo */}
         <div className="flex items-center gap-5">
+        <Link href="/">
           <span className="text-white font-semibold tracking-wide text-lg">
             AgriBioVentures
-          </span>
+          </span></Link>
         </div>
 
         {/* Desktop links */}
